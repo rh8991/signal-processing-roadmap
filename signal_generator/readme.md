@@ -6,7 +6,7 @@ This is a simple, interactive signal generator built in Python. It allows you to
 
 ## 🚀 Features
 
-- 📐 Generate basic signals: sine, square (more coming soon)
+- 📐 Generate basic signals: sine, square and Triangle (more coming soon)
 - 🎛 Set frequency, amplitude, and duration
 - 📊 Visualize waveforms using Matplotlib
 - 🔊 Play signals as audio
