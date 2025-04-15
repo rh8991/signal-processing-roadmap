@@ -25,6 +25,16 @@ while True:
             t, signal = generate_square(freq, amp, phase, offset, duration, fs)
         elif signal_type == 'Triangle':
             t, signal = generate_triangle(freq, amp, phase, offset, duration, fs)
+        elif signal_type == 'Sawtooth':
+            t, signal = generate_sawtooth(freq, amp, phase, offset, duration, fs)
+        elif signal_type == 'Custom':
+            # Custom signal generation logic can be added here
+            sg.popup_error('Custom signal generation not implemented yet!')
+            continue
+        elif signal_type == 'Noise':
+            # Noise signal generation logic can be added here
+            sg.popup_error('Noise signal generation not implemented yet!')
+            continue
         else:
             sg.popup_error('Unsupported signal type!')
             continue
