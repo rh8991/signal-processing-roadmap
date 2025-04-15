@@ -16,14 +16,15 @@ while True:
         freq = float(values['freq'])
         amp = float(values['amp'])
         duration = float(values['duration'])
-        phase = 0  # Phase is not used in the GUI, but can be added later
+        phase = float(values['phase'])
+        offset = float(values['offset'])
 
         if signal_type == 'Sine':
-            t, signal = generate_sine(freq, amp, phase, duration, fs)
+            t, signal = generate_sine(freq, amp, phase, offset, duration, fs)
         elif signal_type == 'Square':
-            t, signal = generate_square(freq, amp, phase, duration, fs)
+            t, signal = generate_square(freq, amp, phase, offset, duration, fs)
         elif signal_type == 'Triangle':
-            t, signal = generate_triangle(freq, amp, phase, duration, fs)
+            t, signal = generate_triangle(freq, amp, phase, offset, duration, fs)
         else:
             sg.popup_error('Unsupported signal type!')
             continue
