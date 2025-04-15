@@ -49,7 +49,7 @@ This project is just the beginning. In future phases, I plan to:
 - [ ] Add triangle and sawtooth wave generation
 - [ ] Replace text inputs with real-time sliders
 - [ ] Export signals to `.wav` files
-- [ ] Import, play and visual signals from '.wav' files
+- [ ] Import, play and visual signals from `.wav` files
 - [ ] Implement real-time waveform animation
 - [ ] Use `customtkinter` or `Dear PyGui` for a modern GUI look
 - [ ] Package the app as a standalone executable (with PyInstaller)
