@@ -1,6 +1,6 @@
 from gui import create_window
 import PySimpleGUI as sg
-from signals import generate_sine, generate_square, generate_triangle
+from signals import generate_sine, generate_square, generate_triangle, generate_sawtooth
 from plotter import plot_signal
 from player import play_signal 
 
