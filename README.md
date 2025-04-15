@@ -24,7 +24,7 @@ This project is a Python-based Signal Generator built over the course of one mon
 
 ## 🔍 Features
 
-- 🎵 Generate sine and square waves
+- 🎵 Generate sine, square and triangle waves
 - ✏️ Customize frequency, amplitude, and duration
 - 🖼 Visual waveform display using Matplotlib
 - 🔊 Play signal through your system speakers
@@ -49,6 +49,7 @@ This project is just the beginning. In future phases, I plan to:
 - [ ] Add triangle and sawtooth wave generation
 - [ ] Replace text inputs with real-time sliders
 - [ ] Export signals to `.wav` files
+- [ ] Import, play and visual signals from '.wav' files
 - [ ] Implement real-time waveform animation
 - [ ] Use `customtkinter` or `Dear PyGui` for a modern GUI look
 - [ ] Package the app as a standalone executable (with PyInstaller)
