@@ -75,6 +75,7 @@ t, y = generate_sine(freq, amp, phase, offset, duration, fs)
 - Real-time signal playback
 
 ---
+
 ## 🔍 Bonus: Human Hearing and Digital Signals
 
 While building this Signal Generator, I wanted to go beyond just visualizing waveforms—I wanted to hear them too. This opens the door to a fascinating intersection between digital signal processing and human perception.
