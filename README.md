@@ -1,69 +1,110 @@
-# 🎛️ Signal Generator Project — One Month Build
+# 📊 Signal Processing Learning Path (6 Months)
 
-This project is a Python-based Signal Generator built over the course of one month. It allows users to generate, visualize, and play various types of signals (sine, square) through a user-friendly GUI.
-
----
-
-## 📅 Timeline
-
-### 🗓️ Month 1 — Initial Build
-
-**Goals:**
-- Learn basics of signal generation and GUI design
-- Implement a working signal generator with visualization and sound playback
-- Practice modular Python development
-
-**What’s Included:**
-- Modular Python code for signal generation
-- Matplotlib-based plotting
-- Audio playback with `sounddevice`
-- GUI built using `tkinter` for simplicity and portability
-- Clean README, LICENSE, and project structure
+Welcome to my 6-month journey through the world of **Signal Processing**. This repository contains a project for each month, highlighting the skills learned and tools used in real-time audio, biomedical signals, and machine learning applications.
 
 ---
 
-## 🔍 Features
+## 🗓️ Month 1: Signal Generator App
 
-- 🎵 Generate sine, square and triangle waves
-- ✏️ Customize frequency, amplitude, and duration
-- 🖼 Visual waveform display using Matplotlib
-- 🔊 Play signal through your system speakers
-- 🧩 Simple, clean GUI using `tkinter`
+Builds a strong foundation in signal theory and basic tools.
 
----
+### ✅ Project: `signal-generator-app`
 
-## 🔧 Tools & Libraries Used
-
-- Python 3.x
-- `numpy` for signal math
-- `matplotlib` for plotting
-- `sounddevice` for audio playback
-- `tkinter` for GUI (built-in, no installation needed)
+- Generate sine, square, and sawtooth waves
+- Visualize them using Matplotlib
+- Optional: Add GUI (Python or MATLAB)
 
 ---
 
-## 🛣️ Future Plans
+## 🗓️ Month 2: Audio Noise Filter
 
-This project is just the beginning. In future phases, I plan to:
+Applies transforms and filtering concepts to clean real-world audio.
 
-- [ ] Add triangle and sawtooth wave generation
-- [ ] Replace text inputs with real-time sliders
-- [ ] Export signals to `.wav` files
-- [ ] Import, play and visual signals from `.wav` files
-- [ ] Implement real-time waveform animation
-- [ ] Use `customtkinter` or `Dear PyGui` for a modern GUI look
-- [ ] Package the app as a standalone executable (with PyInstaller)
-- [ ] Add filtering & FFT visualization tools
+### ✅ Project: `audio-noise-filter`
+
+- Record a noisy audio clip
+- Design FIR/IIR filters (e.g., Butterworth)
+- Filter and compare signals before and after
 
 ---
 
-## 🙌 Purpose
+## 🗓️ Month 3: ECG Filter & Anomaly Detector
 
-This project is part of my journey into signal processing, Python GUI development, and applied electrical engineering. It also serves as a hands-on way to sharpen skills in code structure, visualization, and user interaction.
+Works with real biomedical data and introduces simulation tools.
+
+### ✅ Project: `ecg-anomaly-detector`
+
+- Load ECG signals (from PhysioNet)
+- Filter noise, detect peaks
+- Optional: Identify irregular heartbeats
 
 ---
 
-## 📬 Feedback & Collaboration
+## 🗓️ Month 4: Real-Time DSP on Microcontroller
 
-If you have ideas or want to contribute, feel free to fork the repo or open an issue. This is an evolving project — and feedback is always welcome.
+Bridges embedded systems and DSP for real-time filtering.
 
+### ✅ Project: `arduino-dsp-filter`
+
+- Capture audio via mic on Arduino
+- Implement basic low-pass or band-stop filters in C
+- Output processed signal to speaker
+
+---
+
+## 🗓️ Month 5: Voice Command Classifier
+
+Combines signal processing with machine learning.
+
+### ✅ Project: `voice-command-classifier`
+
+- Record voice commands
+- Extract features (FFT, energy, etc.)
+- Train an ML model (e.g., SVM or KNN)
+
+---
+
+## 🗓️ Month 6: Final Project & Portfolio
+
+Brings everything together into a showcase-worthy application.
+
+### ✅ Project Options (folder: `final-project`)
+
+- 🎛️ Real-time DSP GUI (e.g., FFT visualizer)
+- ❤️ Biomedical signal processor
+- 🤖 ML-powered sound/motion detector
+
+---
+
+## 📁 Repository Structure
+
+```bash
+/signal-generator-app
+/audio-noise-filter
+/ecg-anomaly-detector
+/arduino-dsp-filter
+/voice-command-classifier
+/final-project
+README.md
+```
+
+---
+
+## 🚀 Skills Gained
+
+- Signal creation, transformation & filtering
+- Python & MATLAB for signal analysis
+- C/C++ for real-time embedded DSP
+- Machine Learning for classification
+- Git, GitHub, and technical documentation
+
+---
+
+## 📌 Notes
+
+Each folder contains:
+
+- Source code
+- Instructions
+- Demo outputs (images/audio/models)
+- README per project
