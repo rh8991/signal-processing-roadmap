@@ -75,5 +75,17 @@ t, y = generate_sine(freq, amp, phase, offset, duration, fs)
 - Real-time signal playback
 
 ---
+🔍 Bonus: Human Hearing and Digital Signals
 
+While building this Signal Generator, I wanted to go beyond just visualizing waveforms—I wanted to hear them too. This opens the door to a fascinating intersection between digital signal processing and human perception.
+
+Humans can typically hear frequencies from 20 Hz to 20,000 Hz, though the upper limit decreases with age. Our ears don't just "hear" frequency—they interpret complex patterns of amplitude, phase, and harmonic content. That’s why a square wave sounds harsh and a sine wave sounds smooth, even if they have the same frequency.
+
+But here’s the twist: computers don’t hear—they only deal with numbers. When we generate a signal in Python or MATLAB, we're discretizing it into samples using a sampling rate (e.g., 44,100 samples/sec). According to the Nyquist Theorem, to accurately reproduce a signal, we must sample at least twice its highest frequency. Fail to do this, and we get aliasing, where signals appear as lower frequencies than they really are—an audio illusion of sorts.
+
+Once the signal is sampled and converted to digital data, it’s passed through the sound card’s digital-to-analog converter (DAC), then finally reproduced by your headphones or speakers as vibrations in air. Those vibrations are detected by your ears and interpreted by your brain—completing a beautiful loop from code to cognition.
+
+This part of the project helped me appreciate how the theory I study in class—Nyquist rate, Fourier analysis, anti-aliasing filters—has a real impact on how we experience sound in everyday life.
+
+---
 Made with 💻 and 🎷
