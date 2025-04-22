@@ -8,6 +8,6 @@ def create_window():
         [sg.Text('Phase (rad):'), sg.InputText('0', key='phase')],
         [sg.Text('Offset:'), sg.InputText('0', key='offset')],
         [sg.Text('Duration (s):'), sg.InputText('2', key='duration')],
-        [sg.Button('Generate & Plot'), sg.Button('Play'), sg.Button('Exit')],
+        [sg.Button('Generate & Plot'), sg.Button('Play'),sg.Button('Export'), sg.Button('Exit')],
     ]
     return sg.Window('Signal Generator', layout)

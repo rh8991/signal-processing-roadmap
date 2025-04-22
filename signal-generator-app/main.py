@@ -2,7 +2,7 @@ from gui import create_window
 import PySimpleGUI as sg
 from signals import generate_sine, generate_square, generate_triangle, generate_sawtooth
 from plotter import plot_signal
-from player import play_signal 
+import player
 
 fs = 44100  # Sampling frequency
 window = create_window()
@@ -41,7 +41,9 @@ while True:
 
         plot_signal(t, signal, title=f"{signal_type} Wave")
     elif event == 'Play':
-        play_signal(signal, fs)
+        player.play_signal(signal, fs)
+    elif event == 'Export':
+        player.export_signal(signal, fs)
     elif event == 'Exit':
         break
 window.close()
