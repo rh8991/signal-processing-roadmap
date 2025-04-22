@@ -1,1 +1,4 @@
-pip install numpy matplotlib sounddevice PySimpleGUI
+numpy
+matplotlib
+sounddevice
+PySimpleGUI
