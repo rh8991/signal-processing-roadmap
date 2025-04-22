@@ -11,6 +11,7 @@ This is a simple, interactive signal generator built in Python. It allows you to
 - 📊 Visualize waveforms using Matplotlib
 - 🔊 Play signals as audio
 - 🖼 GUI built with PySimpleGUI (Windows-friendly)
+- 📤 Export signal to WAV
 
 ---
 
@@ -71,7 +72,7 @@ t, y = generate_sine(freq, amp, phase, offset, duration, fs)
 
 - Custom signal editor
 - White/pink noise generator
-- Export signal to WAV/CSV
+- Export signal to CSV
 - Real-time signal playback
 
 ---
