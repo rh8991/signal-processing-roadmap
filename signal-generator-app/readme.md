@@ -20,7 +20,7 @@ This is a simple, interactive signal generator built in Python. It allows you to
 Install the dependencies using pip:
 
 ```bash
-pip install numpy matplotlib sounddevice PySimpleGUI
+pip install scipy numpy matplotlib sounddevice PySimpleGUI
 ```
 
 ---
