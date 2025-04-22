@@ -1,7 +1,7 @@
 from gui import create_window
 import PySimpleGUI as sg
 from signals import generate_sine, generate_square, generate_triangle, generate_sawtooth
-from plotter import plot_signal
+import plotter
 import player
 
 fs = 44100  # Sampling frequency
@@ -39,11 +39,15 @@ while True:
             sg.popup_error('Unsupported signal type!')
             continue
 
-        plot_signal(t, signal, title=f"{signal_type} Wave")
+        plotter.plot_signal(t, signal, title=f"{signal_type} Wave")
     elif event == 'Play':
         player.play_signal(signal, fs)
     elif event == 'Export':
         player.export_signal(signal, fs)
+    elif event == 'Clear':
+        # Clear the plot using the plotter module
+        #plotter.clear_plot()
+        sg.popup('function not implemented yet!')
     elif event == 'Exit':
         break
 window.close()
