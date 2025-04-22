@@ -15,6 +15,12 @@ This is a simple, interactive signal generator built in Python. It allows you to
 
 ---
 
+## 🐍 Python Version
+
+Tested with **Python 3.10+**. Other versions may work, but are not guaranteed.
+
+---
+
 ## 📦 Requirements
 
 Install the dependencies using pip:
