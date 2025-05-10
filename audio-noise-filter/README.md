@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ## 📂 File Structure
 
 - `gui.py`: Main GUI layout and interactions
-- `audio_tools.py`: Audio handling functions—record, play, upload, and plot
+- `audio_tools.py`: Audio handling functions—record, play, upload, plot and fillter
 - `assets/`: Logo and static assets
 
 ### 🔍 Filtering Logic (Coming Soon)
