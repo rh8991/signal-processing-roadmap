@@ -11,14 +11,13 @@ An interactive Python-based GUI tool for recording, playing, visualizing, and fi
 - ✨ Built with **NiceGUI** for a responsive user interface
 - 🧼 Future support for **real-time denoising** and frequency-domain filtering
 
-
 ## 🐍 Python Version
 
 Tested with **Python 3.10+**
 
 ## 📦 Requirements
 
-Install all dependencies using:
+Install all dependencies using
 
 ```bash
 pip install -r requirements.txt
