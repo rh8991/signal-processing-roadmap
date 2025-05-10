@@ -1,26 +1,45 @@
-# Audio Noise Filter (WIP)
+# 🔇 Real-Time Audio Noise Filter App
 
-This project is an audio recording and processing tool built in Python.  
-It uses the `sounddevice` library to capture stereo audio from the microphone and save it as a `.wav` file.
+An interactive Python-based GUI tool for recording, playing, visualizing, and filtering audio signals—designed for learning, experimentation, and real-time signal processing.
 
-The recorded audio is currently saved in a normalized floating-point format and can be used for further processing, such as filtering noise or analyzing sound features.
+---
 
-> **Status**: This project is a work in progress. More features such as noise filtering, playback, and waveform visualization are planned.
+## 🚀 Features
+
+- 🔴 **Record** audio from your microphone
+- ▶️ **Play** back the recording instantly
+- 🎵 **Upload** any WAV file to analyze or clean
+- 📈 **Visualize** waveforms using Plotly
+- ✨ Built with **NiceGUI** for a responsive user interface
+- 🧼 Future support for **real-time denoising** and frequency-domain filtering
 
 ---
 
 ## 🐍 Python Version
 
-Tested with **Python 3.10+**. Other versions may work, but are not guaranteed.
+Tested with **Python 3.10+**
 
 ---
-## Requirements
 
-- Python 3.x  
-- `sounddevice`  
-- `scipy`  
-- `wavio` (optional)
+## 📦 Requirements
+
+Install all dependencies using:
 
 ```bash
 pip install -r requirements.txt
-```
+
+
+## 📂 File Structure
+
+- `gui.py`: Main GUI layout and interactions
+- `audio_tools.py`: Audio handling functions—record, play, upload, and plot
+- `assets/`: Logo and static assets
+
+### 🔍 Filtering Logic (Coming Soon)
+
+The filtering module will allow applying **digital filters** (e.g., low-pass, high-pass, band-stop) to clean unwanted noise from audio signals. This will be done using either:
+
+- **Time-domain convolution** with custom filter kernels, or
+- **Frequency-domain filtering** using the Fast Fourier Transform (FFT), where specific frequency bands are attenuated or removed.
+
+The goal is to give users an intuitive way to clean recordings and understand how filters affect real-world signals—bridging theoretical DSP concepts with practical audio effects.
