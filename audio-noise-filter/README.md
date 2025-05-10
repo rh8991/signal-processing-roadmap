@@ -29,6 +29,8 @@ Install all dependencies using:
 pip install -r requirements.txt
 ```
 
+---
+
 ## 📂 File Structure
 
 - `gui.py`: Main GUI layout and interactions
