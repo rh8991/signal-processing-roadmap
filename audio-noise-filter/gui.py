@@ -1,8 +1,10 @@
 from nicegui import app, ui
 import signal_tools as tools 
 import plotly.graph_objects as go
-import filters
+import signal_processing as sp
 
+INPUT_FILENAME = tools.INPUT_FILENAME
+OUTPUT_FILENAME = tools.OUTPUT_FILENAME
 
 fig = go.Figure()
 
@@ -20,25 +22,27 @@ with ui.row().classes('items-start'):
                 ui.notify('Recording...'),
                 tools.record_audio(), 
                 ui.notify('Recording finished')))
-            ui.button('▶️ Play', on_click=lambda: (tools.play_audio(), ui.notify('Playback done')))
+            ui.button('▶️ Play', on_click=lambda: (tools.play_signal(INPUT_FILENAME), ui.notify('Playback done')))
             ui.button('📈 Plot', on_click=lambda: (
                 fig.data == [],
                 ui.notify('Plotting'),
-                tools.plot_audio_signal(fig),
+                tools.plot_Input_signal(fig),
                 plot.update()
                 ))
             
         with ui.row().classes('items-center justify-center' ):
-            ui.upload(on_upload=tools.audio_upload, label='🎵 Load WAV File')
+            ui.upload(on_upload=tools.upload_signal, label='🎵 Load WAV File')
 
         ui.label('Output').classes('text-h6')
         
         with ui.row().classes('items-center justify-center'):
-            scale_in = ui.number(label='Scale', value=0.5, min=0, max=2, step=0.1,on_change= lambda e: scale_in.set_value(e.value))
-            phase_in = ui.number(label='Phase',value=0, min=0, max=10, step=1,on_change= lambda e: phase_in.set_value(e.value))
+            scale_in = ui.number(label='Scale', value=1, min=0, max=2, step=0.1)
+            t_shift_in = ui.number(label='Time shifting [ms]',value=0, min=0, step=1)
+            
             ui.button('Generate', on_click=lambda: (
-                tools.phase_shift(fig, phase_in.value),
-                tools.scaling(fig, scale_in.value),
+                sp.time_shift(fig, t_shift_in.value), print(f"TIME SHIFTING {t_shift_in.value}") if t_shift_in.value > 0 else None, #! TODO: fix time shifting
+                sp.scaling(fig, scale_in.value), print(f"SCALING {scale_in.value}") if scale_in.value != 1 else None,
+                tools.add_trace(fig),
                 plot.update()))
             
         with ui.row().classes('items-center justify-center'):
@@ -72,11 +76,11 @@ with ui.row().classes('items-start'):
                     ui.item('FFT', on_click=lambda: (
                         dropdown_btn.set_text('FFT'),
                         dropdown_btn.close(),
-                        filters.fft(fig),
+                        sp.fft(fig),
                         plot.update(),
                         ))
                 
-                ui.button('▶️ Play', on_click=lambda: (tools.play_fillter(), ui.notify('Playback done')))
+                ui.button('▶️ Play', on_click=lambda: (tools.play_signal(OUTPUT_FILENAME), ui.notify('Playback done')))
                         
     with ui.column().classes('q-pa-md'):
         fig.update_layout(
