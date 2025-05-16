@@ -33,7 +33,7 @@ def record_audio():
         print(f"[ERROR] Failed to record audio: {e}")
 
 
-def play_audio():
+def play_signal():
     """
     Play the recorded audio from the WAV file.
     """
@@ -50,7 +50,7 @@ def play_audio():
     except Exception as e:
         print(f"[ERROR] Failed to play audio: {e}")
 
-def play_fillter():
+def play_output():
     """
     Play the filtered audio from the WAV file.
     """
@@ -67,7 +67,7 @@ def play_fillter():
     except Exception as e:
         print(f"[ERROR] Failed to play filtered audio: {e}")
 
-def audio_upload(e):
+def upload_signal(e):
     #print(e.content.read())
     with open(INPUT_FILENAME, 'wb') as f:
         f.write(e.content.read())
@@ -76,7 +76,7 @@ def audio_upload(e):
     nicegui.notify(f"Loaded {e.name}: {data.shape[0]/rate:.2f} sec")
 
 
-def plot_audio_signal(fig):
+def plot_signal(fig):
     """
     Plot the audio signal on the provided figure.
     """
@@ -98,28 +98,6 @@ def plot_audio_signal(fig):
     except Exception as e:
         print(f"[ERROR] Failed to plot audio signal: {e}")
 
-def audio_noise_filter(fig):
-    """
-    Apply a noise filter to the audio signal.
-    """
-    try:
-        print("Applying noise filter...")
-        if not os.path.exists(INPUT_FILENAME):
-            print(f"[ERROR] File '{INPUT_FILENAME}' does not exist.")
-            return
-        rate, data = read(INPUT_FILENAME)
-        # Apply a simple noise filter (e.g., low-pass filter)
-        # This is just a placeholder; actual implementation would depend on the desired filter
-        data = np.fromstring(data, dtype=np.int16)
-        if len(data.shape) > 1:
-            data = data[:, 0]
-        filtered_data = data * 0.5  # Example: reduce amplitude by half
-        write(OUTPUT_FILENAME, rate, filtered_data)
-        add_trace(fig)
-        print("Noise filter applied.")
-        
-    except Exception as e:
-        print(f"[ERROR] Failed to apply noise filter: {e}")
         
 def add_trace(fig):
     """
@@ -137,9 +115,63 @@ def add_trace(fig):
             data = data[:, 0]  # Use only the first channel if stereo
             
         t = np.linspace(0, len(data) / rate, num=len(data))
-        fig.add_trace(go.Scatter(x=t, y=data / 32767, mode='lines', name='Filtered Signal'))
+        #data must be between -1 and 1 for plotting. int16 is between -32768 and 32767
+        fig.add_trace(go.Scatter(x=t, y=data / 32767, mode='lines', name='Output Signal'))
         print("Trace added.")
         
     except Exception as e:
         print(f"[ERROR] Failed to add trace: {e}")
+        
+def open_signal():
+    """
+    Open the audio signal from the input file.
+    """
+    try:
+        print("Applying noise filter...")
+        if not os.path.exists(INPUT_FILENAME):
+            print(f"[ERROR] File '{INPUT_FILENAME}' does not exist.")
+            return
+        rate, data = read(INPUT_FILENAME)
+        if len(data.shape) > 1:
+            data = data[:, 0]
+        data = np.fromstring(data, dtype=np.int16)
+        
+        print(data.dtype, data.shape, np.max(data), np.min(data))
+        
+        return rate, data
+    
+    except Exception as e:
+        print(f"[ERROR] Failed to read audio file: {e}")
+        return None, None
+
+def scaling(fig, scale):
+    """
+    Apply a noise filter to the audio signal.
+    """
+    try:
+        rate, data = open_signal()
+        scaled_data = (data * float(scale)).astype(np.int16)  # Scale the data
+        if np.max(scaled_data) > 32767 or np.min(scaled_data) < -32768:
+            scaled_data = np.clip(scaled_data, -32768, 32767)
+            print("Clipping applied to scaled data.")
+        write(OUTPUT_FILENAME, rate, scaled_data)
+        add_trace(fig)
+        print("Scaling was applied.")
+        
+    except Exception as e:
+        print(f"[ERROR] Failed to apply noise filter: {e}")
+
+def phase_shift(fig, phase):
+    """
+    Apply a phase shift to the audio signal.
+    """
+    try:
+        rate, data = open_signal()
+        phase_shifted_data = np.roll(data, int(phase))
+        write(OUTPUT_FILENAME, rate, phase_shifted_data)
+        add_trace(fig)
+        print("Phase shift was applied.")
+        
+    except Exception as e:
+        print(f"[ERROR] Failed to apply noise filter: {e}")
         

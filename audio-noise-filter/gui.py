@@ -1,26 +1,10 @@
 from nicegui import app, ui
-import audio_tools as tools 
+import signal_tools as tools 
 import plotly.graph_objects as go
-import asyncio
+import filters
 
 
 fig = go.Figure()
-'''
-label = ui.label('00').classes('text-h3')
-
-
-async def start_timer():
-    for i in range(11):  # 0 to 5 in steps of 0.5
-        seconds = i * 0.5
-        label.text = f'{seconds:04.1f}'
-        await asyncio.sleep(0.5)
-
-async def record_with_timer():
-    ui.notify('Recording...')
-    await asyncio.gather(start_timer(), tools.record_audio())
-    ui.notify('Recording finished')
-'''
-
 
 with ui.row().classes('items-start'):
     with ui.column().classes('items-left justify-center q-pa-md gap-4'):
@@ -47,20 +31,52 @@ with ui.row().classes('items-start'):
         with ui.row().classes('items-center justify-center' ):
             ui.upload(on_upload=tools.audio_upload, label='🎵 Load WAV File')
 
-        ui.label('Fillters').classes('text-h6')
+        ui.label('Output').classes('text-h6')
         
+        with ui.row().classes('items-center justify-center'):
+            scale_in = ui.number(label='Scale', value=0.5, min=0, max=2, step=0.1,on_change= lambda e: scale_in.set_value(e.value))
+            phase_in = ui.number(label='Phase',value=0, min=0, max=10, step=1,on_change= lambda e: phase_in.set_value(e.value))
+            ui.button('Generate', on_click=lambda: (
+                tools.phase_shift(fig, phase_in.value),
+                tools.scaling(fig, scale_in.value),
+                plot.update()))
+            
         with ui.row().classes('items-center justify-center'):
             dropdown_btn = ui.dropdown_button(text='Filters', split=True)   
             with ui.row().classes('items-center justify-center'):
                 with dropdown_btn:
-                    ui.item('Fillter', on_click=lambda: (
-                        tools.audio_noise_filter(fig),
-                        ui.notify('Filtering done'),
-                        dropdown_btn.set_text('Filter'),
-                        plot.update()
+                    ui.item('High-Pass', on_click=lambda: (
+                        dropdown_btn.set_text('High-Pass'),
+                        dropdown_btn.close()
                         ))
-                ui.button('Play Filtered', on_click=lambda: (tools.play_fillter(), ui.notify('Playback done')
+                    ui.item('Low-Pass', on_click=lambda: (
+                        dropdown_btn.set_text('Low-Pass'),
+                        dropdown_btn.close()
+                        ))
+                    ui.item('Band-Pass', on_click=lambda: (
+                        dropdown_btn.set_text('Band-Pass'),
+                        dropdown_btn.close()
+                        ))
+                    ui.item('Band-Stop', on_click=lambda: (
+                        dropdown_btn.set_text('Band-Stop'),
+                        dropdown_btn.close()
+                        ))
+                    ui.item('FIR', on_click=lambda: (
+                        dropdown_btn.set_text('FIR'),
+                        dropdown_btn.close()
                     ))
+                    ui.item('IIR', on_click=lambda: (
+                        dropdown_btn.set_text('IIR'),
+                        dropdown_btn.close()
+                                                     ))
+                    ui.item('FFT', on_click=lambda: (
+                        dropdown_btn.set_text('FFT'),
+                        dropdown_btn.close(),
+                        filters.fft(fig),
+                        plot.update(),
+                        ))
+                
+                ui.button('▶️ Play', on_click=lambda: (tools.play_fillter(), ui.notify('Playback done')))
                         
     with ui.column().classes('q-pa-md'):
         fig.update_layout(
