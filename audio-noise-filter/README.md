@@ -1,21 +1,26 @@
-# 🔇 Real-Time Audio Noise Filter App
+# 🔇 SonicScope – Real-Time Audio Signal Visualizer & Editor
 
-An interactive Python-based GUI tool for recording, processing, visualizing, and playing audio signals—designed for real-time signal processing, experimentation, and learning.
+An interactive Python GUI app to record, analyze, and manipulate audio signals in real-time. Visualize signals in the **time and frequency domains**, apply **transformations**, and explore signal behavior using **FFT and waveform plots**.
 
 ## 🚀 Features
 
-- 🔴 **Record** audio from your microphone (stereo, 5 seconds)
-- ▶️ **Play** both raw and processed audio
-- 📈 **Plot** input and output waveforms using Plotly
-- 📤 **Upload** WAV files for analysis
-- ⚙️ **Apply transformations** like:
-  - Amplitude **scaling**
-  - Time-domain **shifting**
-  - Basic **FFT** visualization (upcoming)
-- 🎚️ **Filter menu** interface (upcoming):
-  - High-Pass, Low-Pass, Band-Pass, Band-Stop
-  - FIR and IIR filter types
-- ✨ Built with **NiceGUI** for interactive web UI
+* 🔴 **Record** stereo audio (5 seconds) from your microphone
+* ▶️ **Play** both input and output signals
+* 📈 **Visualize** signals in:
+
+  * Time domain
+  * Frequency domain via FFT
+* 📤 **Upload** and analyze external WAV files
+* ⚙️ **Transform** your signal with:
+
+  * Amplitude **scaling**
+  * Time-domain **shifting**
+* 🎛️ **Interactive Filter Menu** (under development):
+
+  * High-Pass, Low-Pass, Band-Pass, Band-Stop
+  * FIR and IIR filter designs
+* 🧠 **Modular architecture** with centralized config and better separation of logic
+* 🛠️ Built using **NiceGUI**, **NumPy**, **SciPy**, **Plotly**, and **PyDub**
 
 ## 🖼️ Demo
 
@@ -27,8 +32,8 @@ Tested with **Python 3.10+**
 
 ## 📦 Requirements
 
-- Python 3.10 or higher
-- Install the dependencies listed in `requirements.txt`
+* Python 3.10 or higher
+* Install the dependencies listed in `requirements.txt`
 
 ## ▶️ Running the App
 
@@ -36,63 +41,59 @@ Tested with **Python 3.10+**
 
    ```bash
    git clone https://github.com/rh8991/signal-processing-roadmap.git
-   cd signal-processing-roadmap/audio-noise-filtero-noise-filter
-   pip install -r requirements.txt
+   cd signal-processing-roadmap/audio-noise-filter
    ```
 
 2. **Install the required packages**:
-   
+
    ```bash
    pip install -r requirements.txt
    ```
+
 3. **Run the app**:
 
-    ```bash
-    python gui.py
-    ```
+   ```bash
+   python gui.py
+   ```
 
 4. **Open in your browser**:
 
-    Visit <http://localhost:8080> to use the web-based interface.
+   Visit [http://localhost:8080](http://localhost:8080) to use the web-based interface.
 
 ## 📂 File Structure
 
 ```bash
 audio-noise-filter/
-├── assets/
-│   ├── input.wav         # Recorded input audio
-│   └── output.wav        # Processed output audio
-├── gui.py                # NiceGUI frontend and layout
-├── signal_tools.py       # Audio handling: record, play, upload, plot
-├── signal_processing.py  # Signal processing: scaling, shifting, FFT
-├── requirements.txt      # Python dependencies
-└── README.md             # Project documentation
+├── assets/                # Audio files (input/output WAV)
+│   ├── input.wav
+│   └── output.wav
+├── config.py              # Central config and shared plots
+├── gui.py                 # NiceGUI front-end layout
+├── signal_tools.py        # Recording, playback, upload, plotting
+├── signal_processing.py   # FFT, scaling, time-shifting, filters
+├── requirements.txt       # Dependencies
+└── README.md              # This file
 ```
 
 ## 📚 Lessons Learned
 
-While developing the app, I learned that `scipy.io.wavfile.read()` returns a NumPy array where stereo audio has shape `(samples, 2)`. Using `np.fromstring()` on this array incorrectly flattened it, causing slow-motion playback and incorrect signal length. The fix was to use one channel via `data = data[:, 0]` and avoid reinterpreting the array.  
+While building this project, I discovered key differences in how stereo audio is handled in NumPy arrays and SciPy WAV readers. Flattening stereo channels using `np.fromstring()` led to **incorrect playback speed** and signal length. The fix involved **selecting one audio channel (`data[:, 0]`)** and ensuring memory contiguity using `np.ascontiguousarray()`.
 
-More on this topic: [SciPy WAV file documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.io.wavfile.read.html)
+🧠 Want to understand this better? Read more in the [SciPy WAV documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.io.wavfile.read.html)
 
-## 🔍 Filtering Logic (Planned)
+## 🔍 FFT & Domain Plots
 
-The app provides a dropdown menu for common digital filter types, which are currently placeholders. Future updates will include:
-
-- **Time-domain filtering** using convolution
-- **Frequency-domain filtering** using FFT
-- Parameter controls for cutoff frequency, gain, etc.
+The **FFT** feature computes the frequency spectrum of your signal and overlays it in the Frequency Domain tab. Plots are interactive and powered by **Plotly**, giving real-time signal feedback for deeper analysis.
 
 ## 🤝 Contributing
 
 Contributions, ideas, and feedback are welcome!
 
-- Feel free to fork the repo and submit a pull request
-- Open an issue to suggest features or report bugs
-- Star ⭐ the repo if you find it useful!
+* Feel free to fork the repo and submit a pull request
+* Open an issue to suggest features or report bugs
+* Star ⭐ the repo if you find it useful!
 
 GitHub: [https://github.com/rh8991/signal-processing-roadmap](https://github.com/rh8991/signal-processing-roadmap)
-
 
 ## 📄 License
 

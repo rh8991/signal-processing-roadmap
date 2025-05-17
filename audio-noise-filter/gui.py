@@ -2,11 +2,14 @@ from nicegui import app, ui
 import signal_tools as tools 
 import plotly.graph_objects as go
 import signal_processing as sp
+import config
 
-INPUT_FILENAME = tools.INPUT_FILENAME
-OUTPUT_FILENAME = tools.OUTPUT_FILENAME
+INPUT_FILENAME ,OUTPUT_FILENAME = config.INPUT_FILENAME ,config.OUTPUT_FILENAME
 
-fig = go.Figure()
+fig_time = config.fig_time
+fig_freq = config.fig_freq
+# === GUI ===
+
 
 with ui.row().classes('items-start'):
     with ui.column().classes('items-left justify-center q-pa-md gap-4'):
@@ -24,12 +27,24 @@ with ui.row().classes('items-start'):
                 ui.notify('Recording finished')))
             ui.button('▶️ Play', on_click=lambda: (tools.play_signal(INPUT_FILENAME), ui.notify('Playback done')))
             ui.button('📈 Plot', on_click=lambda: (
-                fig.data == [],
+                fig_time.data == [],
                 ui.notify('Plotting'),
-                tools.plot_Input_signal(fig),
-                plot.update()
+                tools.plot_Input_signal(),
+                plot_time.update()
                 ))
             
+            #TODO fix clear button
+            '''
+            ui.button('🗑️ Clear', on_click=lambda: (
+                fig_time._data == [],
+                fig_time.update(),
+                fig_freq._data == [],
+                fig_freq.update(),
+                ui.notify('Cleared'),
+                print("Cleared") if fig_time.data == [] and fig_freq.data == [] else None
+                ))
+            '''    
+                
         with ui.row().classes('items-center justify-center' ):
             ui.upload(on_upload=tools.upload_signal, label='🎵 Load WAV File')
 
@@ -40,10 +55,10 @@ with ui.row().classes('items-start'):
             t_shift_in = ui.number(label='Time shifting [ms]',value=0, min=0, step=1)
             
             ui.button('Generate', on_click=lambda: (
-                sp.time_shift(fig, t_shift_in.value), print(f"TIME SHIFTING {t_shift_in.value}") if t_shift_in.value > 0 else None, #! TODO: fix time shifting
-                sp.scaling(fig, scale_in.value), print(f"SCALING {scale_in.value}") if scale_in.value != 1 else None,
-                tools.add_trace(fig),
-                plot.update()))
+                sp.time_shift(t_shift_in.value), print(f"TIME SHIFTING {t_shift_in.value}") if t_shift_in.value > 0 else None, #! TODO: fix time shifting
+                sp.scaling(scale_in.value), print(f"SCALING {scale_in.value}") if scale_in.value != 1 else None,
+                tools.add_output(),
+                plot_time.update()))
             
         with ui.row().classes('items-center justify-center'):
             dropdown_btn = ui.dropdown_button(text='Filters', split=True)   
@@ -74,23 +89,31 @@ with ui.row().classes('items-start'):
                         dropdown_btn.close()
                                                      ))
                     ui.item('FFT', on_click=lambda: (
+                        print("applying FFT..."),
                         dropdown_btn.set_text('FFT'),
                         dropdown_btn.close(),
-                        sp.fft(fig),
-                        plot.update(),
+                        sp.fft(),
+                        plot_freq.update(),
                         ))
                 
                 ui.button('▶️ Play', on_click=lambda: (tools.play_signal(OUTPUT_FILENAME), ui.notify('Playback done')))
                         
     with ui.column().classes('q-pa-md'):
-        fig.update_layout(
-            margin=dict(l=0, r=0, t=0, b=0),
-            xaxis_title='Time (s)',
-            yaxis_title='Amplitude',
-            title=dict(text='Audio Signal', x=0.5, y=0.95)
-        )
-        plot = ui.plotly(fig).classes('w-full h-full')                
-        
+        with ui.tabs() as tabs:
+            ui.tab('Time Domain', icon='timeline')
+            ui.tab('Frequency Domain', icon='timeline')
+            
+        with ui.tab_panels(tabs, value='Time Domain'):#.classes('w-full'):
+            with ui.tab_panel('Time Domain'):
+                fig_time.update_layout(margin=dict(l=0, r=0, t=0, b=0), xaxis_title='Time (s)', yaxis_title='Amplitude')
+                plot_time = ui.plotly(fig_time).classes('w-full h-80')
+                            
+            with ui.tab_panel('Frequency Domain'):
+                fig_freq.update_layout(margin=dict(l=0, r=0, t=0, b=0), xaxis_title='Frequency (Hz)', yaxis_title='FFT Amplitude')
+                plot_freq = ui.plotly(fig_freq).classes('w-full h-80')
+            
+
+    #with ui.column().classes('q-pa-md'):
           
 with ui.footer().classes('items-center justify-center q-pa-md'):
     ui.label('Real-time Audio Noise Filter').classes('text-h6')

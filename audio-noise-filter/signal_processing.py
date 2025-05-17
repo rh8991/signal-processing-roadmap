@@ -7,14 +7,16 @@ import signal_tools as tools
 import os
 from scipy.io.wavfile import write, read
 import numpy as np
+import plotly.graph_objects as go
+import config
 
 
-
-INPUT_FILENAME = tools.INPUT_FILENAME
-OUTPUT_FILENAME = tools.OUTPUT_FILENAME
+INPUT_FILENAME, OUTPUT_FILENAME = config.INPUT_FILENAME, config.OUTPUT_FILENAME
+fig_time, fig_freq = config.fig_time, config.fig_freq
+# === Constants ===
 
         
-def scaling(fig, scale):
+def scaling(scale):
     """
     Apply a noise filter to the audio signal.
     """
@@ -32,7 +34,7 @@ def scaling(fig, scale):
     except Exception as e:
         print(f"[ERROR] Failed to apply noise scaling: {e}")
 
-def time_shift(fig, shift_ms):
+def time_shift(shift_ms):
     #TODO: fix time shifting and add true phase shifting using fft
     """
     Apply a time shifting shift to the audio signal.
@@ -46,16 +48,17 @@ def time_shift(fig, shift_ms):
     except Exception as e:
         print(f"[ERROR] Failed to apply noise filter: {e}")
 
-def fft(fig):
+def fft():
     """
     Apply Fast Fourier Transform (FFT) to the audio signal.
     """
-#try:
-    rate, data = tools.open_signal()
-    fft_data = np.fft.fft(data)
-    #write(OUTPUT_FILENAME, rate, fft_data)
-    #tools.add_trace(fig)
-    print("FFT was applied.")
-    
-    #except Exception as e:
-    #    print(f"[ERROR] Failed to apply FFT: {e}")
+    try:
+        print("Applying FFT...")
+        rate, data = tools.open_signal(INPUT_FILENAME)
+        fft_data = np.fft.fft(data)
+        #write(OUTPUT_FILENAME, rate, fft_data)
+        fig_freq.add_trace(go.Scatter(x=np.fft.fftfreq(len(data), d=1/rate), y=np.abs(fft_data), mode='lines', name='FFT'))
+        print("FFT was applied.")
+        
+    except Exception as e:
+            print(f"[ERROR] Failed to apply FFT: {e}")
