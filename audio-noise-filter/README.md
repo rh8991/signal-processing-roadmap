@@ -17,31 +17,41 @@ An interactive Python-based GUI tool for recording, processing, visualizing, and
   - FIR and IIR filter types
 - ✨ Built with **NiceGUI** for interactive web UI
 
+## 🖼️ Demo
+
+![Demo of the app in action](assets/demo.gif)
+
 ## 🐍 Python Version
 
 Tested with **Python 3.10+**
 
 ## 📦 Requirements
 
-Install all dependencies using:
-
-```bash
-pip install -r requirements.txt
-```
+- Python 3.10 or higher
+- Install the dependencies listed in `requirements.txt`
 
 ## ▶️ Running the App
 
-1. **Install dependencies**:
+1. **Clone the repository**:
 
    ```bash
+   git clone https://github.com/rh8991/signal-processing-roadmap.git
+   cd signal-processing-roadmap/audio-noise-filtero-noise-filter
    pip install -r requirements.txt
+   ```
 
-2. **Start the app**:
+2. **Install the required packages**:
+   
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Run the app**:
 
     ```bash
     python gui.py
+    ```
 
-3. **Open in your browser**:
+4. **Open in your browser**:
 
     Visit <http://localhost:8080> to use the web-based interface.
 
@@ -72,6 +82,17 @@ The app provides a dropdown menu for common digital filter types, which are curr
 - **Time-domain filtering** using convolution
 - **Frequency-domain filtering** using FFT
 - Parameter controls for cutoff frequency, gain, etc.
+
+## 🤝 Contributing
+
+Contributions, ideas, and feedback are welcome!
+
+- Feel free to fork the repo and submit a pull request
+- Open an issue to suggest features or report bugs
+- Star ⭐ the repo if you find it useful!
+
+GitHub: [https://github.com/rh8991/signal-processing-roadmap](https://github.com/rh8991/signal-processing-roadmap)
+
 
 ## 📄 License
 
