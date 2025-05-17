@@ -20,7 +20,7 @@ Builds a strong foundation in signal theory and basic tools.
 
 Applies transforms and filtering concepts to clean real-world audio.
 
-### ✅ Project: `audio-noise-filter`
+### ✅ Project: `SonicScope`
 
 - Record a noisy audio clip
 - Design FIR/IIR filters (e.g., Butterworth)

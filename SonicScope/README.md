@@ -41,7 +41,7 @@ Tested with **Python 3.10+**
 
    ```bash
    git clone https://github.com/rh8991/signal-processing-roadmap.git
-   cd signal-processing-roadmap/audio-noise-filter
+   cd signal-processing-roadmap/SonicScope
    ```
 
 2. **Install the required packages**:
@@ -63,7 +63,7 @@ Tested with **Python 3.10+**
 ## 📂 File Structure
 
 ```bash
-audio-noise-filter/
+SonicScope/
 ├── assets/                # Audio files (input/output WAV)
 │   ├── input.wav
 │   └── output.wav
