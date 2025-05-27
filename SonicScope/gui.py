@@ -88,8 +88,9 @@ with ui.row().classes('items-start'):
                 generate_output(scale_in.value, t_shift_in.value)))
 
         with ui.row().classes('items-center justify-center'):
-            dropdown_btn = ui.dropdown_button(text='Filters', split=True)
+            #dropdown_btn = ui.dropdown_button(text='Filters', split=True)
             with ui.row().classes('items-center justify-center'):
+                """
                 with dropdown_btn:
                     ui.item('High-Pass', on_click=lambda: (dropdown_btn.set_text('High-Pass'), dropdown_btn.close()))
                     ui.item('Low-Pass', on_click=lambda: (dropdown_btn.set_text('Low-Pass'), dropdown_btn.close()))
@@ -97,6 +98,7 @@ with ui.row().classes('items-start'):
                     ui.item('Band-Stop', on_click=lambda: (dropdown_btn.set_text('Band-Stop'), dropdown_btn.close()))
                     ui.item('FIR', on_click=lambda: (dropdown_btn.set_text('FIR'), dropdown_btn.close()))
                     ui.item('IIR', on_click=lambda: (dropdown_btn.set_text('IIR'), dropdown_btn.close()))
+                """
 
                 ui.button('FFT', icon='timeline', on_click=lambda: asyncio.create_task(run_fft()))
                 ui.button('Play', icon='play_circle', on_click=lambda: asyncio.create_task(play_output()))
