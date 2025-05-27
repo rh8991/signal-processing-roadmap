@@ -8,6 +8,20 @@ INPUT_FILENAME ,OUTPUT_FILENAME = config.INPUT_FILENAME ,config.OUTPUT_FILENAME
 
 fig_time = config.fig_time
 fig_freq = config.fig_freq
+
+# === Functions ===
+def clear_plots():
+    print("Cleaning plots")
+    fig_time.data = []
+    fig_freq.data = []
+
+    plot_time.update()
+    plot_freq.update()
+
+    ui.notify('Plots cleared')
+    print("Plots cleared")
+
+
 # === GUI ===
 
 
@@ -34,17 +48,7 @@ with ui.row().classes('items-start'):
                 plot_time.update()
                 ))
             
-            #TODO fix clear button
-            '''
-            ui.button('🗑️ Clear', on_click=lambda: (
-                fig_time._data == [],
-                fig_time.update(),
-                fig_freq._data == [],
-                fig_freq.update(),
-                ui.notify('Cleared'),
-                print("Cleared") if fig_time.data == [] and fig_freq.data == [] else None
-                ))
-            '''    
+            ui.button('🗑️ Clear', on_click= clear_plots)    
                 
         with ui.row().classes('items-center justify-center' ):
             ui.upload(on_upload=tools.upload_signal, label='🎵 Load WAV File')
@@ -85,18 +89,19 @@ with ui.row().classes('items-start'):
                     ui.item('FIR', on_click=lambda: (
                         dropdown_btn.set_text('FIR'),
                         dropdown_btn.close()
-                    ))
+                        ))
                     ui.item('IIR', on_click=lambda: (
                         dropdown_btn.set_text('IIR'),
                         dropdown_btn.close()
-                                                    ))
-                    ui.item('FFT', on_click=lambda: (
-                        print("applying FFT..."),
-                        dropdown_btn.set_text('FFT'),
-                        dropdown_btn.close(),
-                        sp.fft(),
-                        plot_freq.update(),
-                        ))
+                       ))
+                
+                ui.button('FFT',icon='timeline', on_click=lambda: (
+                            print("applying FFT..."),
+                            dropdown_btn.set_text('FFT'),
+                            dropdown_btn.close(),
+                            sp.fft(),
+                            plot_freq.update(),
+                            ))
                 
                 ui.button('▶️ Play', on_click=lambda: (tools.play_signal(OUTPUT_FILENAME), ui.notify('Playback done')))
                     
