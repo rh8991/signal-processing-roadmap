@@ -64,9 +64,14 @@ Tested with **Python 3.10+**
 
 ```bash
 SonicScope/
-├── assets/                # Audio files (input/output WAV)
+├── assets/                # System files (input/output WAV)
 │   ├── input.wav
 │   └── output.wav
+│   └── ANF_logo.png
+│   └── demo.gif
+│   └── samples/           # Audio samples for testing
+│       ├── sine_440.wav
+│       └── sine_120.wav
 ├── config.py              # Central config and shared plots
 ├── gui.py                 # NiceGUI front-end layout
 ├── signal_tools.py        # Recording, playback, upload, plotting

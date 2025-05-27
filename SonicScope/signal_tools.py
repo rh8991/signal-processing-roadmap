@@ -7,7 +7,6 @@ import sounddevice as sd
 from scipy.io.wavfile import write, read
 import numpy as np
 import os
-import nicegui
 import plotly.graph_objects as go
 from pydub import AudioSegment
 import config
@@ -111,7 +110,6 @@ def upload_signal(e):
         f.write(e.content.read())
 
     rate, data = read(convert_to_pcm16(INPUT_FILENAME))
-    nicegui.ui.notify(f"Loaded {e.name}: {data.shape[0]/rate:.2f} sec")
 
 
 
@@ -128,8 +126,9 @@ def plot_Input_signal():
             data = data[:, 0]  # Use only the first channel if stereo
             
         t = np.linspace(0, len(data) / rate, num=len(data))
-        fig_time.data = []  # Clear previous data
+        #fig_time.data = []  # Clear previous data
         fig_time.add_trace(go.Scatter(x=t, y=data / 32767, mode='lines', name='Input Signal'))
+        fig_time.update()
         print("Signal plotted.")
         
     except Exception as e:
@@ -150,6 +149,7 @@ def add_output():
         t = np.linspace(0, len(data) / rate, num=len(data))
         #data must be between -1 and 1 for plotting. int16 is between -32768 and 32767
         fig_time.add_trace(go.Scatter(x=t, y=data / 32767, mode='lines', name='Output Signal'))
+        fig_time.update()
         print("Trace added.")
         
     except Exception as e:

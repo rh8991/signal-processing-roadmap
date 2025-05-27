@@ -56,9 +56,10 @@ def fft():
         print("Applying FFT...")
         rate, data = tools.open_signal(INPUT_FILENAME)
         fft_data = np.fft.fft(data)
-        #write(OUTPUT_FILENAME, rate, fft_data)
-        fig_freq.add_trace(go.Scatter(x=np.fft.fftfreq(len(data), d=1/rate), y=np.abs(fft_data), mode='lines', name='FFT'))
-        print("FFT was applied.")
-        
+        freq = np.fft.fftfreq(len(data), d=1 / rate)
+        print("FFT computed.")
+        return freq, np.abs(fft_data)
+    
     except Exception as e:
-            print(f"[ERROR] Failed to apply FFT: {e}")
+        print(f"[ERROR] Failed to compute FFT: {e}")
+        return None, None
