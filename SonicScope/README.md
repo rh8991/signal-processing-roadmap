@@ -1,26 +1,28 @@
-# 🔇 SonicScope – Real-Time Audio Signal Visualizer & Editor
+# 🔊 SonicScope – Real-Time Audio Signal Visualizer & Editor
 
-An interactive Python GUI app to record, analyze, and manipulate audio signals in real-time. Visualize signals in the **time and frequency domains**, apply **transformations**, and explore signal behavior using **FFT and waveform plots**.
+An interactive Python GUI app to **record**, **analyze**, and **manipulate** audio signals in real-time. Built with [NiceGUI](https://nicegui.io), this tool provides an educational and exploratory environment for working with digital signals in both time and frequency domains.
 
 ## 🚀 Features
 
-* 🔴 **Record** stereo audio (5 seconds) from your microphone
-* ▶️ **Play** both input and output signals
-* 📈 **Visualize** signals in:
-
-  * Time domain
-  * Frequency domain via FFT
-* 📤 **Upload** and analyze external WAV files
-* ⚙️ **Transform** your signal with:
-
-  * Amplitude **scaling**
-  * Time-domain **shifting**
-* 🎛️ **Interactive Filter Menu** (under development):
-
-  * High-Pass, Low-Pass, Band-Pass, Band-Stop
-  * FIR and IIR filter designs
-* 🧠 **Modular architecture** with centralized config and better separation of logic
-* 🛠️ Built using **NiceGUI**, **NumPy**, **SciPy**, **Plotly**, and **PyDub**
+- 🎙 **Record** stereo audio (5 seconds) from your microphone
+- 🔁 **Play** both input and output WAV signals
+- 📈 **Visualize** signals in:
+  - Time domain
+  - Frequency domain (via **FFT**)
+- 📤 **Upload** and analyze custom WAV files
+- ✨ **Transform** your signal with:
+  - Amplitude **scaling**
+  - Time-domain **shifting** (support in progress)
+- 🧹 **Clear** and refresh plots interactively
+- 🎛️ **Apply Filters** using a unified dialog:
+  - High-Pass, Low-Pass, Band-Pass, Band-Stop
+  - Interactive sliders for single and range cutoffs
+  - Support for **Butterworth filters** (FIR & IIR support in progress)
+- 🧩 **Modular architecture**:
+  - `signal_tools.py` for I/O and plotting
+  - `signal_processing.py` for DSP logic
+  - `gui.py` for UI using NiceGUI
+  - `config.py` for centralized configuration
 
 ## 🖼️ Demo
 
@@ -28,14 +30,9 @@ An interactive Python GUI app to record, analyze, and manipulate audio signals i
 
 ## 🐍 Python Version
 
-Tested with **Python 3.10+**
+- Requires **Python 3.10+**
 
-## 📦 Requirements
-
-* Python 3.10 or higher
-* Install the dependencies listed in `requirements.txt`
-
-## ▶️ Running the App
+## 📦 Installation
 
 1. **Clone the repository**:
 
@@ -44,7 +41,7 @@ Tested with **Python 3.10+**
    cd signal-processing-roadmap/SonicScope
    ```
 
-2. **Install the required packages**:
+2. **Install dependencies**:
 
    ```bash
    pip install -r requirements.txt
@@ -56,27 +53,27 @@ Tested with **Python 3.10+**
    python gui.py
    ```
 
-4. **Open in your browser**:
+4. **Open in browser**:
 
-   Visit [http://localhost:8080](http://localhost:8080) to use the web-based interface.
+   Visit [http://localhost:8080](http://localhost:8080)
 
 ## 📂 File Structure
 
-```bash
+```
 SonicScope/
-├── assets/                # System files (input/output WAV)
+├── assets/                # System files (input/output WAV, logo, samples)
 │   ├── input.wav
-│   └── output.wav
-│   └── ANF_logo.png
-│   └── demo.gif
-│   └── samples/           # Audio samples for testing
+│   ├── output.wav
+│   ├── ANF_logo.png
+│   ├── demo.gif
+│   └── samples/
 │       ├── sine_440.wav
 │       └── sine_120.wav
-├── config.py              # Central config and shared plots
-├── gui.py                 # NiceGUI front-end layout
-├── signal_tools.py        # Recording, playback, upload, plotting
-├── signal_processing.py   # FFT, scaling, time-shifting, filters
-├── requirements.txt       # Dependencies
+├── config.py              # Shared constants and plot initialization
+├── gui.py                 # NiceGUI front-end layout and interaction logic
+├── signal_tools.py        # Signal utilities: record, play, upload, plot
+├── signal_processing.py   # DSP functions: FFT, filters, scaling, shifting
+├── requirements.txt       # Project dependencies
 └── README.md              # This file
 ```
 
@@ -86,20 +83,16 @@ While building this project, I discovered key differences in how stereo audio is
 
 🧠 Want to understand this better? Read more in the [SciPy WAV documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.io.wavfile.read.html)
 
-## 🔍 FFT & Domain Plots
-
-The **FFT** feature computes the frequency spectrum of your signal and overlays it in the Frequency Domain tab. Plots are interactive and powered by **Plotly**, giving real-time signal feedback for deeper analysis.
-
 ## 🤝 Contributing
 
-Contributions, ideas, and feedback are welcome!
+Contributions are welcome!
 
-* Feel free to fork the repo and submit a pull request
-* Open an issue to suggest features or report bugs
-* Star ⭐ the repo if you find it useful!
+- Fork the repo and open a PR
+- Report issues or suggest features
+- ⭐ Star the project to support it!
 
 GitHub: [https://github.com/rh8991/signal-processing-roadmap](https://github.com/rh8991/signal-processing-roadmap)
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+MIT License – free to use, modify, and distribute.
