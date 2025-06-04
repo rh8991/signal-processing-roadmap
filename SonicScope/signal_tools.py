@@ -10,6 +10,8 @@ import os
 import plotly.graph_objects as go
 from pydub import AudioSegment
 import config
+import signal_processing as sp
+# === Imports ===
 
 # === Constants ===
 SAMPLE_RATE = 44100  # in Hz
@@ -22,6 +24,7 @@ fig_freq = config.fig_freq
 
 # === Open Signal === 
 def open_signal(filename):
+    
     """
     Open the signal from the input file.
     """
@@ -45,11 +48,28 @@ def open_signal(filename):
         print(f"[ERROR] Failed to read input signal (input.wav): {e}")
         return None, None
 
+def save_signal(data, rate):
+   
+    """
+    Save the signal data to the output file.
+    """
+    
+    try:
+        print(f"Saving signal to {OUTPUT_FILENAME}")
+        os.makedirs(os.path.dirname(OUTPUT_FILENAME), exist_ok=True)
+        write(OUTPUT_FILENAME, rate, data.astype(np.int16))
+        print("Signal saved successfully.")
+        
+    except Exception as e:
+        print(f"[ERROR] Failed to save output signal: {e}")
+        
 def convert_to_pcm16(input_path: str) -> str:
+    
     """
     Convert any WAV file to PCM 16-bit format using pydub.
     Returns the path to the converted file (or original if already PCM).
     """
+    
     sound = AudioSegment.from_file(input_path, format="wav")
 
     # Check if already 16-bit PCM
@@ -65,6 +85,7 @@ def convert_to_pcm16(input_path: str) -> str:
 
 # === Signal Input ===
 def record_audio():
+    
     """
     Record audio from the microphone and save it to a WAV file.
     """
@@ -87,8 +108,11 @@ def record_audio():
 
 
 def play_signal(filename):
+    
     """
     Play the recorded signal from the WAV file.
+    input: filename - path to the WAV file
+    output: plays the audio signal
     """
     
     try:
@@ -105,6 +129,10 @@ def play_signal(filename):
         
 def upload_signal(e):
     
+    """
+    Upload a signal file from the user.
+    """
+    
     print(f"Uploading {e.name}...")
     with open(INPUT_FILENAME, 'wb') as f:
         f.write(e.content.read())
@@ -115,6 +143,7 @@ def upload_signal(e):
 
 # === Plotting ===
 def plot_Input_signal():
+    
     """
     Plot the signal on the provided figure.
     """
@@ -126,7 +155,6 @@ def plot_Input_signal():
             data = data[:, 0]  # Use only the first channel if stereo
             
         t = np.linspace(0, len(data) / rate, num=len(data))
-        #fig_time.data = []  # Clear previous data
         fig_time.add_trace(go.Scatter(x=t, y=data / 32767, mode='lines', name='Input Signal'))
         fig_time.update()
         print("Signal plotted.")
@@ -135,6 +163,7 @@ def plot_Input_signal():
         print(f"[ERROR] Failed to plot signal: {e}")
         
 def add_output():
+    
     """
     Add a output.wav as a trace to the figure.
     """
@@ -155,6 +184,35 @@ def add_output():
     except Exception as e:
         print(f"[ERROR] Failed to add trace: {e}")
         
+def add_fft_trace(trace_name, filename):
+    """
+    Add a FFT trace to the frequency figure using a windowed signal and dB scaling.
+    Only positive frequencies are shown.
+    """
+    try:
+        print(f"Adding FFT trace from {filename}...")
+        rate, data = open_signal(filename)
+        if data is None:
+            print("[ERROR] No data to add FFT trace.")
+            return
+
+        # Apply Hamming window - Because the FFT is sensitive to discontinuities, we apply a window function
+        window = np.hamming(len(data))
+        windowed_data = data * window
+
+        fft_data = np.fft.fft(windowed_data)
+        freq = np.fft.fftfreq(len(data), d=1 / rate)
+        mask = freq >= 0
+        freq = freq[mask] # Only keep positive frequencies
+        magnitude = np.abs(fft_data)[mask]
+        #magnitude_db = 20 * np.log10(magnitude/ np.max(magnitude))  # Convert to dB scale
+
+        fig_freq.add_trace(go.Scatter(x=freq, y=magnitude, mode='lines', name=trace_name))
+        fig_freq.update()
+        print("FFT trace added.")
+
+    except Exception as e:
+        print(f"[ERROR] Failed to add FFT trace: {e}")
 
 
 
